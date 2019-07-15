@@ -16,6 +16,18 @@ button
   color: white;
 }
 
+button:hover
+{
+  cursor: pointer;
+  background-color:#1a66ff;
+}
+
+a
+{
+  text-decoration: none;
+  color: inherit;
+}
+
 .title
 {
   width: 100%;
@@ -46,19 +58,47 @@ button
 .generalContainer
 {
   width: 100%;
-  max-width: 400px;
-  background-color: #e6e6e6;
   display: flex;
-  flex-direction: column;
-  padding-bottom: 20px;
+  flex-direction: row;
 }
 
 .alignment
 {
   display: flex;
   width: 100%;
+  height: calc(100% - 80px);
   justify-content: center;
   align-items: center;
+}
+
+.eachSign
+{
+  max-width: 350px;
+  width: 100%;
+  background-color: #e6e6e6;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+.popup
+{
+  width: calc(100% - 20px);
+  height: 50px;
+  font-size: 1.5em;
+  line-height: 50px;
+  padding-left: 20px;
+  background-color: #b3ffb3;
+}
+
+#loginPopUp
+{
+  display: none;
+}
+
+#signupPopUp
+{
+  display: none;
 }
 
 #navbar
