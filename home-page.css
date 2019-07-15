@@ -1,0 +1,114 @@
+.navbar {
+    background-color: #65ec95 !important;
+}
+body {
+  overflow: scroll;
+}
+
+#add-image {
+  position:fixed;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 25px;
+  line-height: 46px;
+  text-align: center;
+  border: 2px solid black;
+  bottom: 5%;
+  right: 5%;
+  z-index:1;
+}
+
+#add-image:hover {
+  color:#8e8e8e;
+  border: 2px solid #8e8e8e;
+  cursor: pointer;
+}
+
+#add-image-display {
+  background-color: #a7e084;
+    position: fixed;
+    width: 80%;
+    height: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 150px;
+}
+
+#add-image-submit {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  padding: 10px 20px;
+  font-size:25px;
+  background-color: white;
+  border:2px solid #84e08f;
+  border-radius: 15px;
+}
+
+#add-image-submit:hover {
+  cursor: pointer;
+  background: #eaeaea;
+}
+#add-image-submit:focus {
+  outline:none;
+}
+
+
+#refresh-button {
+  border: none;
+  background-color: #f96675;
+  width: 150px;
+  padding: 7px 20px;
+  border-radius: 15px;
+  font-size: 1.5rem;
+
+  margin: 2.5rem auto 0 auto;
+  box-shadow: 0 3px red;
+
+}
+
+#refresh-button:focus {
+  outline:none;
+}
+
+#refresh-button:hover {
+  cursor: pointer;
+}
+
+#refresh-button.activeRefresh {
+  box-shadow: none;
+  transform: translateY(3px);
+}
+
+#displayImg {
+    width: 100vw;
+    background-color: #96faac;
+}
+
+body {
+    background-color: #96faac;
+}
+
+.img {
+    width: 80%;
+    height: 500px;
+    margin: 50px auto;
+    padding: 10px;
+    background-color: #96f2e1;
+    border-radius: 7px;
+    box-shadow:
+            inset 0 7em 10em -5em rgba(255,255,255,0.5),
+            0 0.3em 0.5em -0.2em rgba(130,186,180,1),
+            0 1em 2em -0.75em rgba(130,186,180,0.75),
+            0 1em 3em -0.5em rgba(130,186,180,0.5),
+            0 3em 3em -0.25em rgba(130,186,180,0.2);
+}
+
+.img-fit {
+    width: 100%;
+    height: 480px;
+    border-radius: 5px;
+}

@@ -1,0 +1,74 @@
+<head>
+
+  <link href="https://fonts.googleapis.com/css?family=Lato|Cuprum&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="index.css">
+
+</head>
+
+<body>
+
+  <!-- script load -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
+
+  <!-- nav bar -->
+  <div id = "navbar">
+    <span>Project Restore Web</span>
+  </div>
+
+  <!-- login -->
+  <div class = "alignment" id = "notSigned">
+    <div class = "generalContainer"  style = "margin: 20px 0px">
+
+      <div class = "title">Login</div>
+      <span class = "loginwords">Email:</span>
+      <input class = "inputField" placeholder = "johndoe@gmail.com" id = "emailLogin"></input>
+      <span class = "loginwords">Password:</span>
+      <input class = "inputField" placeholder = "prettycooldood12%" id = "passwordLogin" type = "password"></input>
+      <button id = "login" onclick = "login()" style = "width: 60px; margin-left: 20px">login</button>
+
+      <div class = "title" style = "margin-top: 20px;">Sign Up</div>
+      <span class = "loginwords">Email:</span>
+      <input class = "inputField" placeholder = "johndoe@gmail.com" id = "emailSignUp"></input>
+      <span class = "loginwords">Password (6 charecters minimum) :</span>
+      <input class = "inputField" placeholder = "prettycooldood12%" id = "passwordSignUp"></input>
+      <button id = "signup" onclick = "signUp()" style = "width: 60px; margin-left: 20px">signup</button>
+
+    </div>
+  </div>
+
+ <!-- welcome user-->
+  <div class = "alignment" id = "signed" style = "height: calc(100% - 60px)">
+    <div class = "generalContainer">
+
+      <div class = "title">Welcome User</div>
+
+      <div style = "display: flex; justify-content: center;">
+        <button style = "width: 100px; margin-right: 10px" onclick = "logout()">Logout</button>
+        <button style = "width: 120px"><a href = "home-page.html">Acsess Account</a></button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- scripts -->
+   <script>
+     // Your web app's Firebase configuration
+     var firebaseConfig = {
+       apiKey: "AIzaSyDwmHW2GbuxcEOESdICcICULkmSbty25Mc",
+       authDomain: "project-restore-73cd4.firebaseapp.com",
+       databaseURL: "https://project-restore-73cd4.firebaseio.com",
+       projectId: "project-restore-73cd4",
+       storageBucket: "project-restore-73cd4.appspot.com",
+       messagingSenderId: "255065765593",
+       appId: "1:255065765593:web:2d6051808eb754e8"
+     };
+     firebase.initializeApp(firebaseConfig);
+     
+   </script>
+
+  <script src="index.js"></script>
+
+</body>
