@@ -1,3 +1,6 @@
+
+
+myAuth = firebase.auth()
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     document.getElementById("signed").style.display = "flex";

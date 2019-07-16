@@ -1,12 +1,23 @@
 // Initialize Firebase
 var selectedFile;
 var user;
-
+var uid = "";
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-    console.log("signed in");
+    // User is signed in.
+    var displayName = user.displayName;
+    var email = user.email;
+    var emailVerified = user.emailVerified;
+    var photoURL = user.photoURL;
+    var isAnonymous = user.isAnonymous;
+    uid = user.uid;
+    console.log(uid)
+    console.log(user)
+    var providerData = user.providerData;
+    // ...
   } else {
-    console.log("chungus");
+    // User is signed out.
+    // ...
   }
 });
 
@@ -64,66 +75,95 @@ $("#add-image-Img").on("change", function(event)
 // });
 //
 $("#add-image-submit").on('click', function(e) {
-    e.preventDefault();
-    var name = document.getElementById("add-image-name").value;
-    var des =  document.getElementById("add-image-description").value;
-    var file =  document.getElementById("add-image-Img").files[0];
-    var fileN =  document.getElementById("add-image-Img").files[0].name;
-    document.getElementById("add-image-name").value = "";
-    document.getElementById("add-image-description").value = "";
-    document.getElementById("add-image-Img").value = "";
-    toggleAddImage();
-    //TODO change file.name so its the uid
-    storage.ref().child(file.name).put(file).then(function(snapshot) {
-      //TODO add the file ref in firestore
-    });
+  e.preventDefault();
+  var name = document.getElementById("add-image-name").value;
+  var des =  document.getElementById("add-image-description").value;
+  var file =  document.getElementById("add-image-Img").files[0];
+  var fileN =  document.getElementById("add-image-Img").files[0].name;
+  document.getElementById("add-image-name").value = "";
+  document.getElementById("add-image-description").value = "";
+  document.getElementById("add-image-Img").value = "";
+  toggleAddImage();
+  var d = new Date();
+  var n = d.getTime();
+  //TODO change file.name so its the uid
+  storage.ref().child(uid).child(""+n).put(file).then(function(snapshot) {
+    //TODO add the file ref in firestore
+    //console.log("SNAPSHOT" + snapshot.ref)
+
+
+    database.ref().child("Users").child(uid).child("Images").child(""+n).child(name).set(des);
+
+  });
 });
 
 var imgArr = [];
-var uid = "user1";
 function getAllImages(callback) {
-    document.getElementById("displayImg").innerHTML = "";
-    db.collection("Users").doc(uid).collection("Images").get().then((col)=>{
-      var c = 0;
-        col.forEach((img) => {
-            new Promise(resolve => {
-                storage.ref().child("" + img.data().id).getDownloadURL().then(function (url) {
-                    resolve(url);
-                });
-            }).then((res) => {
-                c++;
-                imgArr.push({
-                    name: img.data().name,
-                    des: img.data().description,
-                    id: img.data().id,
-                    url: res
-                });
-                if (c==col.size) {
-                  callback&&callback();
-                }
-            });
+  var c = 0;
+
+  document.getElementById("displayImg").innerHTML = "";
+  var reference = database.ref().child("Users").child(uid).child("Images");
+  var total = 0;
+  reference.once('value', function(snapshot) {
+    console.log("Numchildren" + snapshot.numChildren())
+    total = snapshot.numChildren();
+    snapshot.forEach(function(childSnapshot) {
+      var childKey = ""+childSnapshot.key;
+      console.log(childKey)
+      childSnapshot.forEach(function(childOfChildSnapshot){
+
+        var nameVal = ""+childOfChildSnapshot.key;
+        var descVal = ""+childOfChildSnapshot.val();
+
+        var urlVal = storage.ref().child(uid).child(childKey).getDownloadURL().then(function(urlVal) {
+
+          console.log("URL IS" + urlVal)
+
+          imgArr.push({
+            name: nameVal,
+            des: descVal,
+            url: urlVal
+          });
+          c++;
+          console.log("C is " + c)
+          if(c==total){
+            console.log("returning")
+            callback&&callback();
+          }
+        }).catch(function(error) {
+          // Handle any errors
         });
+
+
+      });
+
+
+
     });
+
+  });
+
+
 }
 
 function displayImages() {
-    new Promise(resolve=>{
-      imgArr = [];
-        getAllImages(()=>{resolve();});
-    }).then((res)=>{
-        var str = "";
-        for (var img of imgArr) {
-          var url = img.url + "";
-          str += "<div class=\"img row\">" +
-              "<div class=\"col-6 px-0\">" +
-              "<img src="+url+" class=\"img-fit\">" +
-              "</div>" +
-              "<div class=\"col-6\">" +
-              "<h1>"+img.name+"</h1>" +
-              "<h3>"+img.des+"</h3>" +
-              "<a href="+url+" target=\"_blank\">View in new window</a>" +
-              "</div></div>";
-        }
-        document.getElementById("displayImg").innerHTML = str;
-    });
+  new Promise(resolve=>{
+    imgArr = [];
+    getAllImages(()=>{resolve();});
+  }).then((res)=>{
+    var str = "";
+    for (var img of imgArr) {
+      var url = img.url + "";
+      str += "<div class=\"img row\">" +
+      "<div class=\"col-6 px-0\">" +
+      "<img src="+url+" class=\"img-fit\">" +
+      "</div>" +
+      "<div class=\"col-6\">" +
+      "<h1>"+img.name+"</h1>" +
+      "<h3>"+img.des+"</h3>" +
+      "<a href="+url+" target=\"_blank\">View in new window</a>" +
+      "</div></div>";
+    }
+    document.getElementById("displayImg").innerHTML = str;
+  });
 }
